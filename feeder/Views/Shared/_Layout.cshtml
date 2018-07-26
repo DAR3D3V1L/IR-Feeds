@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script>
+        
+        $(function () {
+            // Loader
+            $(document).ajaxStart(function () { $('.loading').show(); });
+            $(document).ajaxComplete(function () { $('.loading').hide(); });
+
+            //Get Histo Lookup Feed
+            $.get('@Url.Action("GetHistoFeedThisWeek", "HistoFeed")', function (response) {
+                $.each(response.data, function () {
+                    $('#histoLookup tbody').append('<tr><td>'
+                        + this.tradeDate + '</td><td>'
+                        + this.close + '</td><td>'
+                        + this.volume + '</td><td>'
+                        + this.splitAdjustmentFactor + '</td><td>'
+                        + this.open + '</td><td>'
+                        + this.high + '</td><td>'
+                        + this.low + '</td></tr>');
+                });
+            }); 
+
+            //Get SEC Filing Feed
+            $.get('@Url.Action("GetSecFilings", "SecFilling")', function (response) {
+                $.each(response.data, function () {
+                    $('#secFiling tbody').append('<tr><td>'
+                        + this.dateFiled.date + '</td><td>'
+                        + this.formType + '</td><td>'
+                        + this.description + '</td><td>'
+                        + '<a href="' + this.formats.html.url + '" target="_blank">HTML</a> | <a href="' + this.formats.pdf.url +'" target="_blank">PDF</a></td></tr>');
+                });
+            }); 
+        });
+
+        function GetHistoData() {
+            var day = $('#Day').val();
+            var month = $('#Month').val();
+            var year = $('#Year').val();
+            var monthText = $('#Month option:selected').text();
+
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("GetHistoFeeds", "HistoFeed")',
+                data: JSON.stringify({ Day: day, Month: month, Year: year }),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    $('tbody tr, h3').remove();
+                    $('.stitle').append('<h3>Week of ' + monthText.replace('Lookup Month: ','') + ' ' + day + ', ' + year + '</h3>');
+                    $.each(result.data, function () {
+                        $('#histoLookup tbody').append('<tr><td>' + this.tradeDate + '</td><td>' + this.close + '</td><td>' + this.volume + '</td><td>' + this.splitAdjustmentFactor + '</td><td>' + this.open + '</td><td>' + this.high + '</td><td>' + this.low + '</td></tr>');
+                    });
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+            });
+        }
+
+        $('#addastudent').on('click', function () {
+            $('.loading').show();
+            var firstName = $('#FirstName').val();
+            var lastName = $('#LastName').val();
+            var subject = $('#Subject').val();
+            var data = { 'FirstName': firstName, 'LastName': lastName, 'Subject': subject };
+            
+
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("AddStudent", "Test")',
+                data: data,
+                dataType: 'html',
+                success: function (result) {
+                    $('input[type=text]').val("");
+                    $('.loading').hide();
+                    $('.ewan').append('| ' + this.FirstName + ' | ' + this.LastName + ' | ' + this.Subject + ' |<br>');
+                    console.log(result);
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

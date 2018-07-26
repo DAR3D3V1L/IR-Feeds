@@ -1,0 +1,12 @@
+C:\inetpub\wwwroot\feeder\DatabaseAccess\bin\Debug\DatabaseAccess.dll.config
+C:\inetpub\wwwroot\feeder\DatabaseAccess\bin\Debug\DatabaseAccess.dll
+C:\inetpub\wwwroot\feeder\DatabaseAccess\bin\Debug\DatabaseAccess.pdb
+C:\inetpub\wwwroot\feeder\DatabaseAccess\bin\Debug\EntityFramework.dll
+C:\inetpub\wwwroot\feeder\DatabaseAccess\bin\Debug\EntityFramework.SqlServer.dll
+C:\inetpub\wwwroot\feeder\DatabaseAccess\bin\Debug\EntityFramework.xml
+C:\inetpub\wwwroot\feeder\DatabaseAccess\bin\Debug\EntityFramework.SqlServer.xml
+C:\inetpub\wwwroot\feeder\DatabaseAccess\obj\Debug\DatabaseAccess.csprojAssemblyReference.cache
+C:\inetpub\wwwroot\feeder\DatabaseAccess\obj\Debug\DatabaseAccess.csproj.CoreCompileInputs.cache
+C:\inetpub\wwwroot\feeder\DatabaseAccess\obj\Debug\DatabaseAccess.csproj.CopyComplete
+C:\inetpub\wwwroot\feeder\DatabaseAccess\obj\Debug\DatabaseAccess.dll
+C:\inetpub\wwwroot\feeder\DatabaseAccess\obj\Debug\DatabaseAccess.pdb

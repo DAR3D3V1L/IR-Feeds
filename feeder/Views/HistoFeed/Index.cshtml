@@ -1,0 +1,92 @@
+﻿@model feeder.Models.TodaysDate
+
+@{
+    ViewBag.Title = "HistoFeed";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Historic Stock Lookup</h2>
+<br /><br />
+<select id="Month" name="Month" onchange="GetHistoData()">
+    @for (var i = 1; i <= 12; i++)
+    {
+        var dt = new DateTime(2000, i, 1).ToString("MMMM");
+        if (DateTime.Now.Month == i)
+        {
+            <option value="@i.ToString().PadLeft(2,'0')" selected>Lookup Month: @dt</option>
+        }
+        else
+        {
+            <option value="@i.ToString().PadLeft(2,'0')">Lookup Month: @dt</option>
+        }
+
+    }
+</select>
+<select id="Day" name="Day" onchange="GetHistoData()">
+    @for (var i = 1; i <= 31; i++)
+    {
+        if (DateTime.Now.Day == i)
+        {
+            <option value="@i.ToString().PadLeft(2,'0')" selected>Lookup Day: @i</option>
+        }
+        else
+        {
+            <option value="@i.ToString().PadLeft(2,'0')">Lookup Day: @i</option>
+        }
+
+    }
+</select>
+<select id="Year" name="Year" onchange="GetHistoData()">
+    @for (int i = 2000; i <= DateTime.Now.Year; i++)
+    {
+        if (DateTime.Now.Year == i)
+        {
+            <option value="@i" selected>Lookup Year: @i</option>
+        }
+        else
+        {
+            <option value="@i">Lookup Year: @i</option>
+        }
+
+    }
+</select>
+
+<hr />
+<br /><br />
+<div class="btn-group">
+    <button type="button" class="btn btn-danger">Action</button>
+    <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Separated link</a>
+    </div>
+</div>
+<hr />
+<br /><br />
+<div class="stitle"><h3 class="defaultToday">Week of @Model.TMonth @Model.TDay, @Model.TYear</h3></div>
+<hr />
+<br /><br />
+<h4 class="loading">LOADING...</h4>
+<table id="histoLookup" width="100%" border="1" cellpadding="5" cellspacing="5">
+    <thead>
+        <tr>
+            <th>DATE REQUESTED</th>
+            <th>CLOSING TIME</th>
+            <th>VOLUME</th>
+            <th>SPLIT ADJUSTMENT FACTOR</th>
+            <th>OPEN PRICE</th>
+            <th>DAY HIGH</th>
+            <th>DAY LOW</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+
+
